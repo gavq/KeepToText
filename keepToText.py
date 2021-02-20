@@ -1,5 +1,6 @@
 import sys, glob, os, shutil, zipfile, time
-from HTMLParser import HTMLParser
+import urllib.request
+from html.parser import HTMLParser
 from zipfile import ZipFile
 
 class MyHTMLParser(HTMLParser):
@@ -33,7 +34,7 @@ class MyHTMLParser(HTMLParser):
         self.nesting = 0
         
 def msg(s):
-    print >> sys.stderr, s
+    print (s, file=sys.stderr)
     sys.stderr.flush()
 
 def htmlFileToText(inputPath, outputDir, tag, attrib, attribVal):
@@ -104,7 +105,7 @@ def keepZipToText(zipFileName):
         sys.exit(e)
     translatedKeepDirs = ["Keep", "Notizen"]    
     for dirName in translatedKeepDirs:
-	if os.path.isdir(takeoutDir+"/"+dirName): htmlDir = os.path.join(takeoutDir, dirName)
+      if os.path.isdir(takeoutDir+"/"+dirName): htmlDir = os.path.join(takeoutDir, dirName)
 
     htmlDirToText(inputDir=htmlDir, outputDir=outputDir,
         tag="div", attrib="class", attribVal="content")
